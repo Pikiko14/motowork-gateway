@@ -1,19 +1,17 @@
 FROM node:20
 
-# Set the working directory
+# Establecer directorio de trabajo
 WORKDIR /home/motowork-gateway
 
-# Copy package.json and package-lock.json to the working directory
+# Copiar y instalar solo las dependencias
 COPY package*.json ./
+RUN npm cache clean --force && npm install
 
-# Install dependencies
-RUN npm cache clean --force && npm install && npm install ts-node -g
+# Instalar nodemon y ts-node como globales para hot-reload
+RUN npm cache clean --force && npm install && npm install ts-node -g npm install nodemon -g
 
-# Copy the rest of the application files
-COPY . .
-
-# Expose the port the app runs on
+# Exponer el puerto
 EXPOSE 3080
 
-# Command to run the application
-CMD ["npm", "run", "dev"]
+# Comando para iniciar la aplicación con hot-reload
+CMD ["nodemon", "src/app.ts"]
