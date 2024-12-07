@@ -14,4 +14,4 @@ RUN npm cache clean --force && npm install && npm install ts-node -g npm install
 EXPOSE 3080
 
 # Comando para iniciar la aplicación con hot-reload
-CMD ["nodemon", "src/app.ts"]
+CMD ["nodemon", "--legacy-watch", "src/app.ts"]
