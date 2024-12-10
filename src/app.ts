@@ -39,15 +39,15 @@ class APIGateway {
   public start(): void {
     // Route requests to the auth service
     this.app.use("/api/v1/auth", (req: Request, res: Response) => {
-      this.proxy.web(req, res, { target: `${configuration.get("BASE_MICROSERVICE")}/api/v1/auth`});
+      this.proxy.web(req, res, { target: `${configuration.get("BASE_MICROSERVICE")}/auth`});
     });
 
     this.app.use("/api/v1/banners", (req: Request, res: Response) => {
-      this.proxy.web(req, res, { target: `${configuration.get("BASE_MICROSERVICE")}/api/v1/banners` });
+      this.proxy.web(req, res, { target: `${configuration.get("BASE_MICROSERVICE")}/banners` });
     });
 
     this.app.use("/api/v1/categories", (req: Request, res: Response) => {
-      this.proxy.web(req, res, { target: `${configuration.get("BASE_MICROSERVICE")}/api/v1/categories` });
+      this.proxy.web(req, res, { target: `${configuration.get("BASE_MICROSERVICE")}/categories` });
     });
 
     // Start the server
