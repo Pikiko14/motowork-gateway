@@ -55,6 +55,11 @@ class APIGateway {
       this.proxy.web(req, res, { target: `${configuration.get("BRANDS_MICROSERVICE")}/brands` });
     });
 
+    // enable products microservice
+    this.app.use("/api/v1/products", (req: Request, res: Response) => {
+      this.proxy.web(req, res, { target: `${configuration.get("BRANDS_MICROSERVICE")}/products` });
+    });
+
     // Start the server
     this.app.listen(this.port, () => {
       console.log(`API Gateway listening on port ${this.port}`);
