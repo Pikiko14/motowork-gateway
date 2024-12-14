@@ -57,7 +57,7 @@ class APIGateway {
 
     // enable products microservice
     this.app.use("/api/v1/products", (req: Request, res: Response) => {
-      this.proxy.web(req, res, { target: `${configuration.get("BRANDS_MICROSERVICE")}/products` });
+      this.proxy.web(req, res, { target: `${configuration.get("PRODUCTS_MICROSERVICE")}/products` });
     });
 
     // Start the server
