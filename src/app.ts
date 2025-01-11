@@ -62,7 +62,7 @@ class APIGateway {
 
     // enable blog microservice
     this.app.use("/api/v1/blogs", (req: Request, res: Response) => {
-      this.proxy.web(req, res, { target: `${configuration.get("PRODUCTS_MICROSERVICE")}/blogs` });
+      this.proxy.web(req, res, { target: `${configuration.get("BLOGS_MICROSERVICE")}/blogs` });
     });
 
     // Start the server
