@@ -2,12 +2,12 @@ import { createServer } from "http-proxy";
 import configuration from "./../configuration/configuration";
 import express, { Request, Response, Application, NextFunction } from "express";
 import * as winston from 'winston';
+import rateLimit from 'express-rate-limit';
 
 class APIGateway {
   private proxy: ReturnType<typeof createServer>;
   private app: Application;
   private port: number;
-
   private logger: winston.Logger;
 
   constructor() {
@@ -36,7 +36,22 @@ class APIGateway {
     });
   }
 
+  // Setup rate limiter middleware
+  private setupRateLimiter(): void {
+    const limiter = rateLimit({
+      windowMs: 2 * 60 * 1000, // 1 minutes
+      max: 100,
+      message: "Too many requests from this IP, please try again later."
+    });
+
+    // Apply rate limiter globally
+    this.app.use(limiter);
+  }
+
   public start(): void {
+    // Setup rate limiter
+    this.setupRateLimiter();
+
     // Route requests to the auth service
     this.app.use("/api/v1/auth", (req: Request, res: Response) => {
       this.proxy.web(req, res, { target: `${configuration.get("BASE_MICROSERVICE")}/auth`});
@@ -50,17 +65,17 @@ class APIGateway {
       this.proxy.web(req, res, { target: `${configuration.get("BASE_MICROSERVICE")}/categories` });
     });
 
-    // enable brands microservice
+    // Enable brands microservice
     this.app.use("/api/v1/brands", (req: Request, res: Response) => {
       this.proxy.web(req, res, { target: `${configuration.get("BRANDS_MICROSERVICE")}/brands` });
     });
 
-    // enable products microservice
+    // Enable products microservice
     this.app.use("/api/v1/products", (req: Request, res: Response) => {
       this.proxy.web(req, res, { target: `${configuration.get("PRODUCTS_MICROSERVICE")}/products` });
     });
 
-    // enable blog microservice
+    // Enable blog microservice
     this.app.use("/api/v1/blogs", (req: Request, res: Response) => {
       this.proxy.web(req, res, { target: `${configuration.get("BLOGS_MICROSERVICE")}/blogs` });
     });
@@ -73,7 +88,6 @@ class APIGateway {
 }
 
 try {
-  // Instanciar y empezar el servidor
   const gateway = new APIGateway();
   gateway.start();
 } catch (error) {
