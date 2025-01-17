@@ -80,6 +80,11 @@ class APIGateway {
       this.proxy.web(req, res, { target: `${configuration.get("BLOGS_MICROSERVICE")}/blogs` });
     });
 
+    // Enable blog microservice
+    this.app.use("/api/v1/instagrams", (req: Request, res: Response) => {
+      this.proxy.web(req, res, { target: `${configuration.get("INSTAGRAM_MICROSERVICE")}` });
+    });
+
     // Start the server
     this.app.listen(this.port, () => {
       console.log(`API Gateway listening on port ${this.port}`);
