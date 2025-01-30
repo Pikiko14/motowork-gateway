@@ -81,8 +81,13 @@ class APIGateway {
       this.proxy.web(req, res, { target: `${configuration.get("BLOGS_MICROSERVICE")}/blogs` });
     });
 
-    // Enable blog microservice
+    // Enable instagram microservice
     this.app.use("/api/v1/instagrams", (req: Request, res: Response) => {
+      this.proxy.web(req, res, { target: `${configuration.get("INSTAGRAM_MICROSERVICE")}` });
+    });
+
+    // enable orders microservice
+    this.app.use("/api/v1/orders", (req: Request, res: Response) => {
       this.proxy.web(req, res, { target: `${configuration.get("INSTAGRAM_MICROSERVICE")}` });
     });
 
