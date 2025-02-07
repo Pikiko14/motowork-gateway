@@ -88,7 +88,7 @@ class APIGateway {
 
     // enable orders microservice
     this.app.use("/api/v1/orders", (req: Request, res: Response) => {
-      this.proxy.web(req, res, { target: `${configuration.get("ORDERS_MICROSERVICE")}` });
+      this.proxy.web(req, res, { target: `${configuration.get("ORDERS_MICROSERVICE")}/orders` });
     });
 
     // Start the server
