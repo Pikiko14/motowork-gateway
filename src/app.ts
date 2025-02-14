@@ -40,8 +40,8 @@ class APIGateway {
   private setupRateLimiter(): void {
     this.app.set('trust proxy', 1);
     const limiter = rateLimit({
-      windowMs: 2 * 60 * 1000, // 2 minutes
-      max: 100,
+      windowMs: 5 * 60 * 1000, // 5 minutos
+      max: 200,
       message: "Too many requests from this IP, please try again later."
     });
 
