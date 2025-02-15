@@ -5,7 +5,9 @@
   "main": "./src/app.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --legacy-watch ./src/app.ts"
+    "dev": "nodemon --legacy-watch ./src/app.ts",
+    "build": "dotenv -e .env tsc --outDir dist",
+    "start": "node ./dist/app.js"
   },
   "author": "",
   "license": "ISC",
