@@ -93,7 +93,7 @@ class APIGateway {
 
     // enable schedule microservice
     this.app.use("/api/v1/services", (req: Request, res: Response) => {
-      this.proxy.web(req, res, { target: `${configuration.get("ORDERS_MICROSERVICE")}/services` });
+      this.proxy.web(req, res, { target: `${configuration.get("SERVICES_MICROSERVICE")}/services` });
     });
 
     // Start the server
