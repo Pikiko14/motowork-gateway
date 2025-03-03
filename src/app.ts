@@ -96,6 +96,11 @@ class APIGateway {
       this.proxy.web(req, res, { target: `${configuration.get("SERVICES_MICROSERVICE")}/services` });
     });
 
+    // enable contacpime microservice
+    this.app.use("/api/v1/contacpime", (req: Request, res: Response) => {
+      this.proxy.web(req, res, { target: `${configuration.get("CONTACPIME_MICROSERVICE")}/contacpime` });
+    });
+
     // Start the server
     this.app.listen(this.port, () => {
       console.log(`API Gateway listening on port ${this.port}`);
